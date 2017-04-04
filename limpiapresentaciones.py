@@ -11,7 +11,9 @@ def laprimerasirve(path1,path2):
     os.system("composite -compose atop %s %s result-sprite.png > /dev/null" % (path1,path2))
     comparacion=sp.Popen(["compare", "-metric", "PSNR", path2, "result-sprite.png", "/dev/null"],stdout=sp.PIPE,stderr=sp.PIPE)
     comparacion.wait()
-    return float(comparacion.stderr.read())!=float("inf")
+    valor=float(comparacion.stderr.read())
+    print(valor)
+    return valor!=float("inf")
 
 
 # veo cuantas paginas tiene
