@@ -1,0 +1,1 @@
+Script que saca de las presentaciones (en general hechas con latex) las paginas redundantes, dejando solo la pagina que tiene toda la informacion. Para usarlo basta con hacer python limpiapresentaciones.py input.pdf y va a generar input_limpio.pdf
