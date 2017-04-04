@@ -37,7 +37,7 @@ while paginas:
 print("pero solo %s paginas utiles:" % len(result))
 print(",".join(str(x) for x in result))
 print("pdftk A=%s cat %s output out.pdf" % (pdf," ".join("A"+str(x) for x in result)))
-os.system("pdftk A=%s cat %s output out.pdf" % (pdf," ".join("A"+str(x) for x in result)))
+os.system("pdftk A=%s cat %s output %s_limpio.pdf" % (pdf," ".join("A"+str(x) for x in result),pdf.split(".")[0]))
 
 os.system("rm *png")
 
