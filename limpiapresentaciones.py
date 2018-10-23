@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+
 import subprocess as sp
 import os
 import sys
@@ -16,22 +19,25 @@ def laprimerasirve(path1,path2):
 
 
 # veo cuantas paginas tiene
-p=sp.Popen(["exiftool",pdf],stdout=sp.PIPE,stderr=sp.PIPE)
+p=sp.Popen(["pdfinfo",pdf],stdout=sp.PIPE,stderr=sp.PIPE)
 p.wait()
 p=p.stdout.read().splitlines()
 for line in p:
-    if "Page Count" in line:
-        paginas=int(line[len("Page Count"):].split()[-1])
+    if "Pages:" in line:
+        paginas=int(line[len("Pages:"):].split()[-1])
 
 print("tiene %s paginas" % paginas)
-
 #convierto todo el pdf a png con fondo transparente
-os.system("convert -density 200 -trim %s -quality 100 -transparent white output.png > /dev/null" % pdf)
+for pagina in range(paginas):
+    print("Convirtiendo pagina %s a png" % pagina)
+    os.system("convert -density 200 -trim %s[%s] -quality 100 -transparent white output-%s.png" % (pdf,pagina,pagina))
 
 paginas = list(range(paginas))
 result = []
 while paginas:
     #una pagina es util si al superponerla con la siguiente, es distinta a esa siguiente
+    if len(paginas) == 1:
+        print(paginas)
     if len(paginas) == 1 or laprimerasirve("output-%s.png" % paginas[0],"output-%s.png" % paginas[1]):
         result.append(paginas[0]+1) # pongo numero de pagina que comienza en 1 no en 0
     del paginas[0]
